@@ -1,6 +1,10 @@
-LLM with RAG Project
-This repository contains a modular implementation of a Large Language Model (LLM) integrated with Retrieval-Augmented Generation (RAG). The project is designed for research, development, and deployment of an LLM that leverages a retriever to fetch relevant context from a knowledge base before generating responses. It supports training, evaluation, and inference, with a focus on scalability and extensibility.
-Project Structure
+
+# LLM with RAG Project
+
+This repository contains a modular implementation of a **Large Language Model (LLM)** integrated with **Retrieval-Augmented Generation (RAG)**. The project is designed for research, development, and deployment of an LLM that leverages a retriever to fetch relevant context from a knowledge base before generating responses. It supports training, evaluation, and inference, with a focus on scalability and extensibility.
+
+## Project Structure
+
 ```
 llm_rag_project/
 ├── data/                   # Datasets and knowledge base
@@ -57,98 +61,91 @@ llm_rag_project/
 ├── .gitignore              # Git ignore rules
 └── setup.py                # Packaging setup
 ```
-Getting Started
-Prerequisites
 
-Python 3.8+
-Install dependencies:pip install -r requirements.txt
+## Getting Started
 
+### Prerequisites
+- Python 3.8+
+- Install dependencies:
+  ```bash
+  pip install -r requirements.txt
+  ```
+- Recommended: Use a virtual environment (e.g., `venv` or `conda`).
 
-Recommended: Use a virtual environment (e.g., venv or conda).
+### Setup
+1. **Prepare Data**:
+   - Place raw datasets in `data/raw/`.
+   - Add documents for retrieval in `data/knowledge_base/`.
+   - Preprocess data using `utils/preprocessing.py` or custom scripts.
 
-Setup
+2. **Index Knowledge Base**:
+   - Run the indexing script to create embeddings or search indices:
+     ```bash
+     python scripts/index_documents.py
+     ```
 
-Prepare Data:
+3. **Training**:
+   - Fine-tune the retriever (optional):
+     ```bash
+     python scripts/train_retriever.py
+     ```
+   - Train the RAG system:
+     ```bash
+     python scripts/train_rag.py
+     ```
 
-Place raw datasets in data/raw/.
-Add documents for retrieval in data/knowledge_base/.
-Preprocess data using utils/preprocessing.py or custom scripts.
+4. **Evaluation**:
+   - Evaluate the retriever:
+     ```bash
+     python scripts/evaluate.py --mode retriever
+     ```
+   - Evaluate the full RAG pipeline:
+     ```bash
+     python scripts/evaluate.py --mode rag
+     ```
 
+5. **Inference**:
+   - Generate responses with RAG:
+     ```bash
+     python scripts/generate.py
+     ```
+   - Serve the model via API:
+     ```bash
+     python inference/api.py
+     ```
 
-Index Knowledge Base:
+### Configuration
+- Edit configuration files in `configs/` to adjust:
+  - Model parameters (`model_config.yaml`)
+  - Retriever settings (`retriever_config.yaml`)
+  - Training hyperparameters (`training_config.yaml`)
+  - Inference settings (`inference_config.yaml`)
 
-Run the indexing script to create embeddings or search indices:python scripts/index_documents.py
-
-
-
-
-Training:
-
-Fine-tune the retriever (optional):python scripts/train_retriever.py
-
-
-Train the RAG system:python scripts/train_rag.py
-
-
-
-
-Evaluation:
-
-Evaluate the retriever:python scripts/evaluate.py --mode retriever
-
-
-Evaluate the full RAG pipeline:python scripts/evaluate.py --mode rag
-
-
-
-
-Inference:
-
-Generate responses with RAG:python scripts/generate.py
-
-
-Serve the model via API:python inference/api.py
-
-
-
-
-
-Configuration
-
-Edit configuration files in configs/ to adjust:
-Model parameters (model_config.yaml)
-Retriever settings (retriever_config.yaml)
-Training hyperparameters (training_config.yaml)
-Inference settings (inference_config.yaml)
-
-
-
-Dependencies
+## Dependencies
 Key libraries include:
+- `torch`: For model training and inference
+- `transformers`: For pretrained LLMs and tokenizers
+- `faiss-cpu`: For dense retrieval (or `faiss-gpu` for GPU support)
+- `sentence-transformers`: For embedding models
+- `rank_bm25`: For sparse retrieval
+- `fastapi`: For serving the model
+See `requirements.txt` for the full list.
 
-torch: For model training and inference
-transformers: For pretrained LLMs and tokenizers
-faiss-cpu: For dense retrieval (or faiss-gpu for GPU support)
-sentence-transformers: For embedding models
-rank_bm25: For sparse retrieval
-fastapi: For serving the modelSee requirements.txt for the full list.
+## Notes
+- **Retriever Options**: Supports dense (e.g., DPR, Sentence-BERT) and sparse (e.g., BM25) retrievers. Configure in `retriever/config.py`.
+- **Scalability**: For large knowledge bases, consider GPU-accelerated FAISS or Elasticsearch for indexing.
+- **Extensibility**: Add custom metrics in `evaluation/metrics.py` or new models in `models/`.
 
-Notes
-
-Retriever Options: Supports dense (e.g., DPR, Sentence-BERT) and sparse (e.g., BM25) retrievers. Configure in retriever/config.py.
-Scalability: For large knowledge bases, consider GPU-accelerated FAISS or Elasticsearch for indexing.
-Extensibility: Add custom metrics in evaluation/metrics.py or new models in models/.
-
-Contributing
+## Contributing
 Contributions are welcome! Please:
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-name`).
+3. Commit changes (`git commit -m "Add feature"`).
+4. Push to the branch (`git push origin feature-name`).
+5. Open a pull request.
 
-Fork the repository.
-Create a feature branch (git checkout -b feature-name).
-Commit changes (git commit -m "Add feature").
-Push to the branch (git push origin feature-name).
-Open a pull request.
+## License
+This project is licensed under the MIT License. See `LICENSE` for details.
 
-License
-This project is licensed under the MIT License. See LICENSE for details.
-Contact
+## Contact
 For questions or issues, please open an issue on GitHub or contact [your-email@example.com].
