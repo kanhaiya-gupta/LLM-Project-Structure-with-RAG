@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # LLM with RAG Project
 
 This repository implements a **Large Language Model (LLM)** with **Retrieval-Augmented Generation (RAG)** using Python and FastAPI for serving the model. All source code is organized under the `src/` directory, with the FastAPI application in `src/app/app.py`. The `main.py` file in the root directory serves as the primary entry point for running the application or other tasks. The project supports data preprocessing, indexing, training, evaluation, and inference, with a focus on scalability and extensibility.
