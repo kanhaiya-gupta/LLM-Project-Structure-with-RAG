@@ -1,8 +1,3 @@
-You're right, and thank you for clarifying! To align with your request, I'll update the project structure to place `app.py` in a `src/app/` directory, as it contains the FastAPI application, and include a `main.py` file in the root directory as the primary entry point for running the application or other tasks. The `README.md` will be updated to reflect this structure, ensuring all source code (except scripts and `main.py`) resides under `src/`, and the FastAPI deployment instructions will reference `src/app/app.py`. The structure will continue to support the LLM with RAG and maintain modularity.
-
-Below is the updated `README.md` with the revised project structure, `main.py` in the root, and `app.py` in `src/app/`.
-
-
 # LLM with RAG Project
 
 This repository implements a **Large Language Model (LLM)** with **Retrieval-Augmented Generation (RAG)** using Python and FastAPI for serving the model. All source code is organized under the `src/` directory, with the FastAPI application in `src/app/app.py`. The `main.py` file in the root directory serves as the primary entry point for running the application or other tasks. The project supports data preprocessing, indexing, training, evaluation, and inference, with a focus on scalability and extensibility.
@@ -21,7 +16,7 @@ llm_rag_project/
 │   ├── app/
 │   │   ├── __init__.py
 │   │   └── app.py              # FastAPI application for serving the model
-│   ├── data/
+│   ├── dataloaders/
 │   │   ├── __init__.py
 │   │   └── dataloader.py       # Data loading and batching
 │   ├── retriever/
@@ -86,6 +81,7 @@ llm_rag_project/
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.8+
 - Install dependencies:
   ```bash
@@ -94,6 +90,7 @@ llm_rag_project/
 - Recommended: Use a virtual environment (e.g., `venv` or `conda`).
 
 ### Setup
+
 1. **Prepare Data**:
    - Place raw datasets in `data/raw/`.
    - Add documents for retrieval in `data/knowledge_base/`.
@@ -141,6 +138,7 @@ llm_rag_project/
      Access the API at `http://localhost:8000/docs` for interactive documentation.
 
 ### Configuration
+
 - Edit configuration files in `configs/` to adjust:
   - Model parameters (`model_config.yaml`)
   - Retriever settings (`retriever_config.yaml`)
@@ -148,6 +146,7 @@ llm_rag_project/
   - Inference settings (`inference_config.yaml`)
 
 ## Dependencies
+
 Key libraries include:
 - `torch`: For model training and inference
 - `transformers`: For pretrained LLMs and tokenizers
@@ -159,12 +158,14 @@ Key libraries include:
 See `requirements.txt` for the full list.
 
 ## Notes
+
 - **Retriever Options**: Supports dense (e.g., DPR, Sentence-BERT) and sparse (e.g., BM25) retrievers. Configure in `src/retriever/config.py`.
 - **FastAPI**: The API is implemented in `src/app/app.py` using FastAPI, providing endpoints for RAG-based text generation. The `main.py` file serves as the entry point for running the FastAPI application or other tasks.
 - **Scalability**: For large knowledge bases, consider GPU-accelerated FAISS or Elasticsearch for indexing.
 - **Extensibility**: Add custom metrics in `src/evaluation/metrics.py` or new models in `src/models/`.
 
 ## Contributing
+
 Contributions are welcome! Please:
 1. Fork the repository.
 2. Create a feature branch (`git checkout -b feature-name`).
@@ -173,7 +174,32 @@ Contributions are welcome! Please:
 5. Open a pull request.
 
 ## License
+
 This project is licensed under the MIT License. See `LICENSE` for details.
 
 ## Contact
+
 For questions or issues, please open an issue on GitHub or contact [your-email@example.com].
+
+
+### Explanation of Changes:
+- **Directory Renaming**:
+  - Changed `src/data/` to `src/dataloaders/` in the project structure section to reflect the updated naming, as discussed in the previous response. This applies to the directory listing and the description of `dataloader.py`.
+  - Ensured `src/dataloaders/dataloader.py` is described as handling "Data loading and batching," consistent with its role.
+
+- **Preserved Content**:
+  - All other sections (e.g., `src/app/app.py`, `main.py`, `scripts/`, `data/`, etc.) remain unchanged, as the only update is the renaming of `src/data/` to `src/dataloaders/`.
+  - The instructions for setup, training, evaluation, inference, and FastAPI deployment are identical, as they are unaffected by the directory rename.
+  - The dependencies and notes sections remain the same, as the renaming doesn't impact the required libraries or project functionality.
+
+- **Artifact Metadata**:
+  - Kept the same `artifact_id` (`5880ffc1-7400-4d08-bcdf-ba0c656a10e3`) to indicate this is an update to the existing `README.md`.
+  - Assigned a new `artifact_version_id` (`b3e4f9d3-6f0b-4c3b-8f8a-4e8f7c5e9d2f`) to reflect the change.
+  - Maintained the `title` (`README.md`) and `contentType` (`text/markdown`).
+
+### Notes:
+- **Consistency**: The updated `README.md` aligns with the Bash script (`create_project_structure.sh`, artifact ID `f3277bbf-9253-4e7d-a545-7e4a80100429`, version `a8cda932-ae7c-4ec4-86bc-3361ca407a78`), ensuring the project structure is consistent across documentation and setup scripts.
+- **Clarity**: The rename to `src/dataloaders/` avoids confusion with the top-level `data/` directory and clearly indicates the directory's purpose (data loading logic).
+- **Next Steps**: If you need content for specific files (e.g., `src/app/app.py`, `main.py`, or `src/dataloaders/dataloader.py`) or additional updates to the structure, let me know!
+
+This `README.md` accurately reflects the project structure with `src/dataloaders/` and is ready to be used alongside the Bash script to set up the project. Let me know if you need further modifications or additional artifacts!
