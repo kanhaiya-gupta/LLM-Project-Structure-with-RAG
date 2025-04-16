@@ -1,65 +1,86 @@
+You're right, and thank you for clarifying! To align with your request, I'll update the project structure to place `app.py` in a `src/app/` directory, as it contains the FastAPI application, and include a `main.py` file in the root directory as the primary entry point for running the application or other tasks. The `README.md` will be updated to reflect this structure, ensuring all source code (except scripts and `main.py`) resides under `src/`, and the FastAPI deployment instructions will reference `src/app/app.py`. The structure will continue to support the LLM with RAG and maintain modularity.
+
+Below is the updated `README.md` with the revised project structure, `main.py` in the root, and `app.py` in `src/app/`.
+
 
 # LLM with RAG Project
 
-This repository contains a modular implementation of a **Large Language Model (LLM)** integrated with **Retrieval-Augmented Generation (RAG)**. The project is designed for research, development, and deployment of an LLM that leverages a retriever to fetch relevant context from a knowledge base before generating responses. It supports training, evaluation, and inference, with a focus on scalability and extensibility.
+This repository implements a **Large Language Model (LLM)** with **Retrieval-Augmented Generation (RAG)** using Python and FastAPI for serving the model. All source code is organized under the `src/` directory, with the FastAPI application in `src/app/app.py`. The `main.py` file in the root directory serves as the primary entry point for running the application or other tasks. The project supports data preprocessing, indexing, training, evaluation, and inference, with a focus on scalability and extensibility.
 
 ## Project Structure
 
 ```
 llm_rag_project/
-├── data/                   # Datasets and knowledge base
-│   ├── raw/                # Raw datasets (e.g., text corpora)
-│   ├── processed/          # Preprocessed data (e.g., tokenized)
-│   ├── knowledge_base/     # Documents for retrieval
-│   ├── index/              # Precomputed embeddings or indices
-│   └── dataloader.py       # Data loading and batching
-├── retriever/              # Retrieval component
-│   ├── retriever_model.py  # Retriever model (e.g., DPR, BM25)
-│   ├── indexer.py          # Indexing documents
-│   ├── config.py           # Retriever configurations
-│   └── search.py           # Document search logic
-├── models/                 # LLM and RAG integration
-│   ├── architecture.py     # LLM architecture
-│   ├── rag_integration.py  # Combines retriever and LLM
-│   ├── config.py           # Model configurations
-│   └── pretrained/         # Pretrained weights
-├── training/               # Training logic
-│   ├── trainer.py          # Core training loop
-│   ├── loss.py             # Loss functions
-│   ├── scheduler.py        # Learning rate schedules
-│   └── rag_trainer.py      # RAG-specific training
-├── evaluation/             # Evaluation scripts
-│   ├── metrics.py          # Metrics (e.g., recall@k, BLEU)
-│   ├── evaluate_retriever.py # Retriever evaluation
-│   └── evaluate_rag.py     # End-to-end RAG evaluation
-├── inference/              # Inference and deployment
-│   ├── generate.py         # Text generation
-│   ├── api.py              # API for serving model
-│   └── rag_pipeline.py     # RAG inference pipeline
-├── utils/                  # Utilities
-│   ├── logging.py          # Experiment logging
-│   ├── preprocessing.py    # Data preprocessing
-│   ├── embedding_utils.py  # Embedding utilities
-│   └── helpers.py          # Helper functions
-├── configs/                # Configuration files
-│   ├── model_config.yaml   # LLM and RAG settings
-│   ├── retriever_config.yaml # Retriever settings
-│   ├── training_config.yaml # Training settings
-│   └── inference_config.yaml # Inference settings
-├── notebooks/              # Jupyter notebooks
-│   ├── data_exploration.ipynb # Data exploration
+├── data/
+│   ├── raw/                    # Raw datasets (e.g., text corpora)
+│   ├── processed/              # Preprocessed data (e.g., tokenized)
+│   ├── knowledge_base/         # Documents for retrieval (e.g., articles, FAQs)
+│   ├── index/                  # Precomputed embeddings or search indices
+│
+├── src/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   └── app.py              # FastAPI application for serving the model
+│   ├── data/
+│   │   ├── __init__.py
+│   │   └── dataloader.py       # Data loading and batching
+│   ├── retriever/
+│   │   ├── __init__.py
+│   │   ├── retriever_model.py  # Retriever model (e.g., DPR, BM25)
+│   │   ├── indexer.py          # Indexing documents
+│   │   ├── config.py           # Retriever configurations
+│   │   └── search.py           # Document search logic
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── architecture.py     # LLM architecture
+│   │   ├── rag_integration.py  # Combines retriever and LLM
+│   │   ├── config.py           # Model configurations
+│   ├── training/
+│   │   ├── __init__.py
+│   │   ├── trainer.py          # Core training loop
+│   │   ├── loss.py             # Loss functions
+│   │   ├── scheduler.py        # Learning rate schedules
+│   │   └── rag_trainer.py      # RAG-specific training
+│   ├── evaluation/
+│   │   ├── __init__.py
+│   │   ├── metrics.py          # Metrics (e.g., recall@k, BLEU)
+│   │   ├── evaluate_retriever.py # Retriever evaluation
+│   │   └── evaluate_rag.py     # End-to-end RAG evaluation
+│   ├── inference/
+│   │   ├── __init__.py
+│   │   ├── generate.py         # Text generation
+│   │   └── rag_pipeline.py     # RAG inference pipeline
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── logging.py          # Experiment logging
+│   │   ├── preprocessing.py    # Data preprocessing
+│   │   ├── embedding_utils.py  # Embedding utilities
+│   │   └── helpers.py          # Helper functions
+│
+├── configs/
+│   ├── model_config.yaml       # LLM and RAG settings
+│   ├── retriever_config.yaml   # Retriever settings
+│   ├── training_config.yaml    # Training settings
+│   └── inference_config.yaml   # Inference settings
+│
+├── notebooks/
+│   ├── data_exploration.ipynb  # Data exploration
 │   ├── retriever_testing.ipynb # Retriever testing
-│   └── rag_testing.ipynb   # RAG pipeline testing
-├── scripts/                # Executable scripts
-│   ├── index_documents.py  # Index knowledge base
-│   ├── train_retriever.py  # Train retriever
-│   ├── train_rag.py        # Train RAG system
-│   ├── evaluate.py         # Run evaluation
-│   └── generate.py         # Run inference
-├── requirements.txt        # Dependencies
-├── README.md               # Project documentation
-├── .gitignore              # Git ignore rules
-└── setup.py                # Packaging setup
+│   └── rag_testing.ipynb       # RAG pipeline testing
+│
+├── scripts/
+│   ├── index_documents.py      # Index knowledge base
+│   ├── train_retriever.py      # Train retriever
+│   ├── train_rag.py            # Train RAG system
+│   ├── evaluate.py             # Run evaluation
+│   └── generate.py             # Run inference
+│
+├── pretrained/                 # Pretrained weights for LLM and retriever
+├── main.py                     # Main entry point for running the application
+├── requirements.txt            # Dependencies
+├── README.md                   # Project documentation
+├── .gitignore                  # Git ignore rules
+└── setup.py                    # Packaging setup
 ```
 
 ## Getting Started
@@ -76,7 +97,7 @@ llm_rag_project/
 1. **Prepare Data**:
    - Place raw datasets in `data/raw/`.
    - Add documents for retrieval in `data/knowledge_base/`.
-   - Preprocess data using `utils/preprocessing.py` or custom scripts.
+   - Preprocess data using `src/utils/preprocessing.py` or custom scripts.
 
 2. **Index Knowledge Base**:
    - Run the indexing script to create embeddings or search indices:
@@ -109,10 +130,15 @@ llm_rag_project/
      ```bash
      python scripts/generate.py
      ```
-   - Serve the model via API:
+   - Serve the model via FastAPI using `main.py`:
      ```bash
-     python inference/api.py
+     python main.py
      ```
+     Alternatively, run the FastAPI app directly:
+     ```bash
+     uvicorn src.app.app:app --host 0.0.0.0 --port 8000
+     ```
+     Access the API at `http://localhost:8000/docs` for interactive documentation.
 
 ### Configuration
 - Edit configuration files in `configs/` to adjust:
@@ -128,13 +154,15 @@ Key libraries include:
 - `faiss-cpu`: For dense retrieval (or `faiss-gpu` for GPU support)
 - `sentence-transformers`: For embedding models
 - `rank_bm25`: For sparse retrieval
-- `fastapi`: For serving the model
+- `fastapi`: For API serving
+- `uvicorn`: For running the FastAPI server
 See `requirements.txt` for the full list.
 
 ## Notes
-- **Retriever Options**: Supports dense (e.g., DPR, Sentence-BERT) and sparse (e.g., BM25) retrievers. Configure in `retriever/config.py`.
+- **Retriever Options**: Supports dense (e.g., DPR, Sentence-BERT) and sparse (e.g., BM25) retrievers. Configure in `src/retriever/config.py`.
+- **FastAPI**: The API is implemented in `src/app/app.py` using FastAPI, providing endpoints for RAG-based text generation. The `main.py` file serves as the entry point for running the FastAPI application or other tasks.
 - **Scalability**: For large knowledge bases, consider GPU-accelerated FAISS or Elasticsearch for indexing.
-- **Extensibility**: Add custom metrics in `evaluation/metrics.py` or new models in `models/`.
+- **Extensibility**: Add custom metrics in `src/evaluation/metrics.py` or new models in `src/models/`.
 
 ## Contributing
 Contributions are welcome! Please:
